@@ -1,6 +1,5 @@
 # =============================================================================
-# This file is the CMake build system for the Regular Expressions (REGEX)
-# program in Shakespeare's Byte.
+# This file is the CMake build system for the Shakespeare's Byte project
 # =============================================================================
 
 # Sets the CMake version min requirement for Ubuntu
@@ -11,31 +10,34 @@ if($(CMAKE_VERSION) VERSION_LESS 3.22.1)
     cmake_policy(VERSION ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION})
 endif()
 
-# Defines the Shakespeare's Byte Regular Expression project
+# Defines the Shakespeare's Byte project
 project(
-    regular_expressions
+    shakespeares_byte
     VERSION 2024.04.14
-    DESCRIPTION "Regular Expressions for Shakespeare's Byte"
+    DESCRIPTION "LLM text generator project for C++ projects"
     LANGUAGES CXX)
 
 # Names the application's include directories
 set(INCLUDE_DIRS
-    include)
+    include
+    include/Tokenization)
     # more to come ...
 
 # Names the application's source files
 set(SOURCE_FILES
-    source/regular_expressions.cpp)
+    source/Tokenization/BytePairEncoder.cpp
+    source/main.cpp)
     # more to come ...
 
 # Establishes the regex library
-add_library(regex_lib ${SOURCE_FILES})
-target_include_directories(regex_lib PUBLIC ${INCLUDE_DIRS})
+add_library(shakespeares_byte_lib ${SOURCE_FILES})
+target_include_directories(shakespeares_byte_lib PUBLIC ${INCLUDE_DIRS})
 
 # Builds the regex executable
-add_executable(regex_exe ${SOURCE_FILES})
-target_link_libraries(regex_exe PRIVATE regex_lib)
+add_executable(shakespeares_byte_exe ${SOURCE_FILES})
+target_include_directories(shakespeares_byte_exe PRIVATE ${INCLUDE_DIRS})
+target_link_libraries(shakespeares_byte_exe PRIVATE shakespeares_byte_lib)
 
 # Sets executable's properties
-set_target_properties(regex_exe PROPERTIES
-    OUTPUT_NAME "regular_expressions")
+set_target_properties(shakespeares_byte_exe PROPERTIES
+    OUTPUT_NAME "shakespeares_byte")
